@@ -69,6 +69,7 @@ const loginUser = async (req, res) => {
 
     if (isCorrect) {
       const payload = {
+        _id: currUser._id,
         username: currUser.username,
         role: currUser.role
       }
@@ -98,4 +99,39 @@ const loginUser = async (req, res) => {
   }
 }
 
-module.exports = { registerUser, loginUser }
+const changePassword = async (req, res) => {
+  try {
+    const oldPassword = req.body.oldPassword
+    const newPassowrd = req.body.newPassword
+
+    const userId = req.userInfo._id
+    const currUser = await User.findById(userId)
+    const isCorrect = await bcrypt.compare(oldPassword, currUser.password)
+
+    if (!isCorrect) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid password'
+      })
+    }
+
+    const saltRounds = 10
+
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hash = await bcrypt.hash(newPassowrd, salt)
+    await User.findByIdAndUpdate(userId, { password: hash })
+
+    return res.status(201).json({
+      success: true,
+      message: 'Password changed Successfully!!'
+    })
+  } catch (e) {
+    console.log(e)
+    return res.status(400).json({
+      success: false,
+      message: 'Server error'
+    })
+  }
+}
+
+module.exports = { registerUser, loginUser, changePassword }

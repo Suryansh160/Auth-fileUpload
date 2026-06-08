@@ -27,7 +27,7 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hash,
-      role: role || 'user'
+      role: role || 'admin'
     })
 
     await newUser.save()

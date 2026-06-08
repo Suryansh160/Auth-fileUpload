@@ -1,7 +1,6 @@
 const File = require('../models/file')
 const { uploadToCloudinary } = require('../helpers/cloudinary-helper')
 const cloudinary = require('../config/cloudinary')
-const fs = require('fs')
 
 const uploadFile = async (req, res) => {
   try {
@@ -13,8 +12,11 @@ const uploadFile = async (req, res) => {
     }
 
     const { url, publicId, resourceType, format } = await uploadToCloudinary(
-      req.file.path
+      req.file.buffer,
+      req.file.originalname
     )
+    console.log(req.file.path)
+    console.log(fs.existsSync(req.file.path))
 
     fs.unlinkSync(req.file.path)
 

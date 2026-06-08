@@ -15,10 +15,6 @@ const uploadFile = async (req, res) => {
       req.file.buffer,
       req.file.originalname
     )
-    console.log(req.file.path)
-    console.log(fs.existsSync(req.file.path))
-
-    fs.unlinkSync(req.file.path)
 
     const myFile = new File({
       userId: req.userInfo._id,

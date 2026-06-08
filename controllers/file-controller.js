@@ -23,6 +23,7 @@ const uploadFile = async (req, res) => {
       url,
       publicId,
       resourceType,
+      fileName: req.file.originalname,
       format
     })
 
@@ -82,7 +83,7 @@ const deleteFiles = async (req, res) => {
     })
     await File.findByIdAndDelete(fileId)
 
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: 'File deleted successfully'
     })

@@ -4,11 +4,12 @@ const fileSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'User'
       // required: true
     },
     publicId: { type: String, required: true },
     url: { type: String, required: true },
+    fileName: { type: String, required: true },
 
     resourceType: {
       type: String,

@@ -22,7 +22,8 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://auth-fileupload.onrender.com'
+      'https://auth-fileupload.onrender.com',
+      'https://crud-full-stack-sable.vercel.app'
     ],
     credentials: true
   })
